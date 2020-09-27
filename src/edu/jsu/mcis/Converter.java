@@ -57,57 +57,65 @@ public class Converter {
     */
     
     @SuppressWarnings("unchecked")
-    public static String csvToJson(String csvString) {
-        
-        String results = "";
-        
-        try {
-            
-            CSVReader reader = new CSVReader(new StringReader(csvString));
-            List<String[]> full = reader.readAll();
-            Iterator<String[]> iterator = full.iterator();
-            
-           
-           JSONObject JSONObject = new JSONObject();
-            JSONArray colHeader = new JSONArray();
-            JSONArray rowHeader = new JSONArray();
-            JSONArray currentData;
-            JSONArray data = new JSONArray();
-            String[] currentRow = iterator.next();
+    public static String csvToJson(String csvString) 
+        {
 
-            for (int i = 0; i < currentRow.length; ++i) {
-                colHeader.add(currentRow[i]);
-            }
+                String results = "";
 
-            while (iterator.hasNext()) {
-                currentRow = iterator.next();
-                currentData = new JSONArray();
-                                        
-                for (int i = 0; i < currentRow.length; ++i){
-                    if (i == 0){
-                        rowHeader.add(currentRow[i]);
-                    } else {
-                        int dataStringToInt = Integer.parseInt(currentRow[i]);
-                        currentData.add(dataStringToInt);
-                    }
-                }
-                
-                data.add(currentData);
-            }
-            
-            JSONObject.put("colHeaders", colHeader);
-            JSONObject.put("rowHeaders", rowHeader);
-            JSONObject.put("data", data);
-            
-            results = JSONValue.toJSONString(JSONObject);            
-            
-        }  
-               
-        catch(Exception e) { return e.toString(); }
-        
-        return results.trim();
-        
-    }
+                try 
+                    {
+
+                        CSVReader reader = new CSVReader(new StringReader(csvString));
+                        List<String[]> full = reader.readAll();
+                        Iterator<String[]> iterator = full.iterator();
+
+
+                       JSONObject JSONObject = new JSONObject();
+                        JSONArray colHeader = new JSONArray();
+                        JSONArray rowHeader = new JSONArray();
+                        JSONArray currentData;
+                        JSONArray data = new JSONArray();
+                        String[] currentRow = iterator.next();
+
+                        for (int i = 0; i < currentRow.length; ++i)     
+                                {
+                                    colHeader.add(currentRow[i]);
+                                }
+
+                        while (iterator.hasNext()) 
+                            {
+                                currentRow = iterator.next();
+                                currentData = new JSONArray();
+
+                                for (int i = 0; i < currentRow.length; ++i)
+                                    {
+                                        if (i == 0)
+                                                {
+                                                    rowHeader.add(currentRow[i]);
+                                                } 
+                                             else 
+                                                    {
+                                                        int dataStringToInt = Integer.parseInt(currentRow[i]);
+                                                        currentData.add(dataStringToInt);
+                                                    }
+                                    }
+
+                            data.add(currentData);
+                        }
+
+                        JSONObject.put("colHeaders", colHeader);
+                        JSONObject.put("rowHeaders", rowHeader);
+                        JSONObject.put("data", data);
+
+                        results = JSONValue.toJSONString(JSONObject);            
+
+                    }  
+
+                catch(Exception e) { return e.toString(); }
+
+                return results.trim();
+
+        }
     
     public static String jsonToCsv(String jsonString) 
 {
